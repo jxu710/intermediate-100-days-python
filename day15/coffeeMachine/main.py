@@ -30,22 +30,7 @@ resources = {
     "coffee": 100,
 }
 
-
-
-# TODO 1. Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
-
-choice = input("What would you like? (espresso/latte/cappuccino): ")
-
-# TODO: 2. Turn off the Coffee Machine by entering “off” to the prompt.
-if choice == "off":
-    exit()
-
-#TODO 3. Print report.
-# a. When the user enters “report” to the prompt, a report should be generated that shows the current resource values.
-
-if choice.lower() == "report":
-    for k,v in resources.items():
-        print(f"{k}: {v}ml")
+money = 0
 
 # todo 4. Check resources sufficient?
 #  a. When the user chooses a drink, the program should check if there are enough
@@ -56,38 +41,62 @@ if choice.lower() == "report":
 
 def check_sufficient(order):
     for item in order["ingredients"]:
-        # print(order["ingredients"][item])
         if resources[item] < order["ingredients"][item]:
-            print(f"Sorry there is not enough {resources[item]}")
+            print(f"Sorry there is not enough {item}")
             return False
         else:
             return True
 
 
-check_sufficient(MENU[choice])
+continue_ask = True
 
-# TODO 5. Process coins.
-#  a. If there are sufficient resources to make the drink selected, then the program should prompt the user to insert coins.
-#  b. Remember that quarters = $0.25, dimes = $0.10, nickles = $0.05, pennies = $0.01
-#  c. Calculate the monetary value of the coins inserted. E.g. 1 quarter, 2 dimes, 1 nickel, 2
-#  pennies = 0.25 + 0.1 x 2 + 0.05 + 0.01 x 2 = $0.52
+while continue_ask:
 
-if check_sufficient(MENU[choice]):
-    print("Please insert coins.")
-    quarters = int(input("how many quarters?: "))
-    dimes = int(input("how many dimes?:  "))
-    nickles = int(input("how many nickles?: "))
-    pennies = int(input("how many pennies?: "))
+    # TODO 1. Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 
-    quarters_value = quarters * 0.25
-    dimes_value = dimes * 0.10
-    nickles_value = nickles * 0.05
-    pennies_value = pennies * 0.01
+    choice = input("What would you like? (espresso/latte/cappuccino): ")
 
-    total_value_inserted = quarters_value + dimes_value + nickles_value+pennies_value
+    # TODO 3. Print report.
+    #  a. When the user enters “report” to the prompt, a report should be generated that shows the current resource values.
 
-    if total_value_inserted < MENU[choice]["cost"]:
-        print("Sorry that's not enough money. Money refunded.")
-    elif total_value_inserted >= MENU[choice]["cost"]:
-        change = round(total_value_inserted - MENU[choice]["cost"], 2)
-        print(f"Here is ${change} in change.\nHere is your {choice} ☕️. Enjoy!")
+    if choice.lower() == "report":
+        for liquid, amount in resources.items():
+            print(f"{liquid}: {amount}ml")
+        print(f"money: ${money}")
+
+    # TODO: 2. Turn off the Coffee Machine by entering “off” to the prompt.
+    if choice == "off":
+        continue_ask = False
+
+    elif choice in MENU.keys():
+
+    # TODO 5. Process coins.
+    #  a. If there are sufficient resources to make the drink selected, then the program should prompt the user to insert coins.
+    #  b. Remember that quarters = $0.25, dimes = $0.10, nickles = $0.05, pennies = $0.01
+    #  c. Calculate the monetary value of the coins inserted. E.g. 1 quarter, 2 dimes, 1 nickel, 2
+    #  pennies = 0.25 + 0.1 x 2 + 0.05 + 0.01 x 2 = $0.52
+
+        if check_sufficient(MENU[choice]):
+            print("Please insert coins.")
+            quarters = int(input("how many quarters?: "))
+            dimes = int(input("how many dimes?:  "))
+            nickles = int(input("how many nickles?: "))
+            pennies = int(input("how many pennies?: "))
+
+            quarters_value = quarters * 0.25
+            dimes_value = dimes * 0.10
+            nickles_value = nickles * 0.05
+            pennies_value = pennies * 0.01
+
+            total_value_inserted = quarters_value + dimes_value + nickles_value+pennies_value
+
+            if total_value_inserted < MENU[choice]["cost"]:
+                print("Sorry that's not enough money. Money refunded.")
+            elif total_value_inserted >= MENU[choice]["cost"]:
+                change = round(total_value_inserted - MENU[choice]["cost"], 2)
+                print(f"Here is ${change} in change.\nHere is your {choice} ☕️. Enjoy!")
+                money += MENU[choice]["cost"]
+
+                for ingredient in MENU[choice]["ingredients"]:
+
+                    resources[ingredient] -= MENU[choice]["ingredients"][ingredient]
