@@ -34,16 +34,16 @@ resources = {
 
 # TODO 1. Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 
-order = input("What would you like? (espresso/latte/cappuccino): ")
+choice = input("What would you like? (espresso/latte/cappuccino): ")
 
 # TODO: 2. Turn off the Coffee Machine by entering “off” to the prompt.
-if order == "off":
+if choice == "off":
     exit()
 
 #TODO 3. Print report.
 # a. When the user enters “report” to the prompt, a report should be generated that shows the current resource values.
 
-if order.lower() == "report":
+if choice.lower() == "report":
     for k,v in resources.items():
         print(f"{k}: {v}ml")
 
@@ -56,7 +56,8 @@ if order.lower() == "report":
 
 def check_sufficient(order):
     for item in order["ingredients"]:
-        print(order["ingredients"][item])
+        # print(order["ingredients"][item])
+        if resources[item] < order["ingredients"][item]:
+            print(f"Sorry there is not enough {resources[item]}")
 
-
-check_sufficient(MENU[order])
+check_sufficient(MENU[choice])
