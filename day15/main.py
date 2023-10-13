@@ -30,6 +30,8 @@ resources = {
     "coffee": 100,
 }
 
+
+
 # TODO 1. Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 
 order = input("What would you like? (espresso/latte/cappuccino): ")
@@ -44,3 +46,17 @@ if order == "off":
 if order.lower() == "report":
     for k,v in resources.items():
         print(f"{k}: {v}ml")
+
+# todo 4. Check resources sufficient?
+#  a. When the user chooses a drink, the program should check if there are enough
+#  resources to make that drink.
+#  b. E.g. if Latte requires 200ml water but there is only 100ml left in the machine. It should
+#  not continue to make the drink but print: “Sorry there is not enough water.”
+#  c. The same should happen if another resource is depleted, e.g. milk or coffee.
+
+def check_sufficient(order):
+    for item in order["ingredients"]:
+        print(order["ingredients"][item])
+
+
+check_sufficient(MENU[order])
