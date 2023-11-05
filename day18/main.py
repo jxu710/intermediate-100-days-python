@@ -11,13 +11,13 @@ from turtle import Turtle,Screen
 
 # challenge 2 : draw a dotted line
 arrow = Turtle()
-arrow.shape("arrow")
-
-for _ in range (12):
-    arrow.forward(10)
-    arrow.color("white")
-    arrow.forward(10)
-    arrow.color("black")
+# arrow.shape("arrow")
+#
+# for _ in range (12):
+#     arrow.forward(10)
+#     arrow.color("white")
+#     arrow.forward(10)
+#     arrow.color("black")
 
 # instuction solution :
 # for _ in range (12):
@@ -25,8 +25,6 @@ for _ in range (12):
 #     arrow.penup()
 #     arrow.forward(10)
 #     arrow.pendown()
-
-
 
 
 
