@@ -16,9 +16,10 @@ turtle.colormode(255)
 
 for item in range (36):
     circle.color(random_color())
+    circle.speed('fastest')
     circle.circle(100)
     circle.setheading(item*10)
-    circle.speed('fastest')
+
 
 
 
